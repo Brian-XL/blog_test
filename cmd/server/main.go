@@ -1,21 +1,23 @@
 package main
 
 import (
-	"log"
-
+	"github.com/Brian-XL/blog_test/internal/app"
+	"github.com/Brian-XL/blog_test/internal/config"
+	"github.com/Brian-XL/blog_test/internal/model"
+	"github.com/Brian-XL/blog_test/pkg/database"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	cfg := config.LoadConfig()
+
+	db := database.InitDB(cfg)
+
+	db.AutoMigrate(model.User{}, model.Post{}, model.Comment{})
+
 	r := gin.Default()
 
-	// 路由示例
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	app.RegisterAllRoutes(r, db, cfg.JWT.Secret)
 
-	log.Println("Server running at http://localhost:8080")
 	r.Run(":8080")
 }

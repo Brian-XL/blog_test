@@ -1,0 +1,16 @@
+app:
+  name: "blog_test"
+  port: 8080
+
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  password: postgres
+  name: blog_test
+  sslmode: disable
+  timezone: Asia/Shanghai
+
+jwt:
+  secret: hello-joey-amazon
+  expire_hours: 24
